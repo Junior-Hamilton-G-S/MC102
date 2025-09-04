@@ -6,26 +6,73 @@
 ###################################################
 
 numero_de_semanas = int(input())
-retornos_pendentes = 0
+espera_novos = int()
+espera_antigos = int()
 
 # Leitura das semanas
 
-for semana_atual in range(1, numero_de_semanas + 1):
+for semana in range(1, numero_de_semanas + 1):
     horarios_disponiveis = int(input())
-    primeiros_atendimentos = int(input())
-    retornos = int(input())
+    pacientes_novos = int(input())
+    pacientes_antigos = int(input())
 
     # Cálculos e impressão da saída por semana
     
-    primeiros_agendados = min(primeiros_atendimentos, horarios_disponiveis)
-    horarios_restantes = horarios_disponiveis - primeiros_agendados
+# Ordem de Prioridade:
+    # 1 Pacientes em espera (espera_novos)
+    # 2 Pacientes em espera (espera_antigos)
+    # 3 Novos agendamentos (pacientes_novos)
+    # 4 Novos agendamentos (pacientes_antigos)
 
-    total_retornos_a_agendar = retornos + retornos_pendentes
-    retornos_agendados = min(total_retornos_a_agendar, horarios_restantes)
+    if espera_novos > 0 and espera_antigos > 0:
+        a = min()
+        b = min()
 
-    retornos_pendentes = total_retornos_a_agendar - retornos_agendados
 
+    if espera_novos > 0:
+        a = min(horarios_disponiveis, espera_novos)
+        espera_novos = abs(espera_novos - a)
+        horarios_restantes = abs(horarios_disponiveis - a)
+        b = min(horarios_restantes, pacientes_novos)
+
+        if horarios_restantes < pacientes_novos:
+            espera_novos = abs(espera_novos + abs(pacientes_novos - b))
+        else:
+            espera_novos = abs(espera_novos - b)
+
+        primeiro_atendimento = abs(a + b)
+        horarios_restantes = abs(horarios_restantes - b)
+        retorno = min(horarios_restantes, pacientes_antigos)
+
+        if horarios_restantes < pacientes_antigos:
+            espera_antigos = abs(espera_antigos + abs(pacientes_antigos - retorno))
+        else:
+            espera_antigos = abs(espera_antigos - retorno)
+    
+    
+    if espera_antigos > 0:
+        a = min()
+        b = min()
+    
+
+    else: 
+        primeiro_atendimento = min(horarios_disponiveis, pacientes_novos)
+
+        if horarios_disponiveis < pacientes_novos:
+            espera_novos = abs(pacientes_novos - primeiro_atendimento)
+        else:
+            espera_novos = 0
+
+        horarios_restantes = abs(horarios_disponiveis - primeiro_atendimento)
+        retorno = min(horarios_restantes, pacientes_antigos)
+
+        if horarios_restantes < pacientes_antigos:
+            espera_antigos = abs(pacientes_antigos - retorno)
+        else:
+            espera_antigos = 0
+
+    
   
-    print('Semana:', semana_atual)
-    print('Pacientes de primeiro atendimento agendados:', primeiros_agendados)
-    print('Pacientes de retorno agendados:', retornos_agendados)
+    print('Semana:', semana)
+    print('Pacientes de primeiro atendimento agendados:', primeiro_atendimento)
+    print('Pacientes de retorno agendados:', retorno)
