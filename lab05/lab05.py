@@ -25,9 +25,16 @@ for semana in range(1, numero_de_semanas + 1):
     # 4 Novos agendamentos (pacientes_antigos)
 
     if espera_novos > 0 and espera_antigos > 0:
-        a = min()
-        b = min()
+        a = min(horarios_disponiveis, espera_novos)
+        espera_novos = abs(espera_novos - a)
+        horarios_restantes = abs(horarios_disponiveis - a)
+        b = min(horarios_restantes, espera_antigos)
+        if horarios_restantes < espera_antigos:
+            espera_antigos = abs(espera_antigos - b)
+        else:
+            espera_antigos = abs(espera_antigos - b)
 
+        
 
     if espera_novos > 0:
         a = min(horarios_disponiveis, espera_novos)
