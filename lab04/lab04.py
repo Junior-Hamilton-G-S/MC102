@@ -7,14 +7,12 @@
 
 t = float(input()) #Tempo total disponível para treino (em horas)
 T = (t * 60) #Tempo total disponível para treino (em minutos)
-G = str() # Grupo muscular
-E = float() #Tempo gasto por exercício (em minutos)
 
-treino_pernas = float()
-treino_peito = float()
-treino_costas = float()
-treino_braços = float()
-descanso = float()
+treino_pernas = 0
+treino_peito = 0
+treino_costas = 0
+treino_braços = 0
+descanso = 0
 
 # Leitura do tempo total
 
@@ -24,7 +22,7 @@ descanso = float()
 
 while T > 0 :
     G = input()
-    E = input()
+    E = float(input()) #tempo de exercicio
 
     if T >= E:
         if G == "pernas":
