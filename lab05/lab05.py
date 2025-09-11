@@ -15,6 +15,9 @@ for semana in range(1, numero_de_semanas + 1):
     horarios_disponiveis = int(input())
     pacientes_novos = int(input())
     pacientes_antigos = int(input())
+    horarios_restantes = 0 
+    primeiro_atendimento = a
+    retorno = b
 
     # Cálculos e impressão da saída por semana
     
@@ -59,17 +62,17 @@ for semana in range(1, numero_de_semanas + 1):
             espera_novos = 0
 
     if espera_antigos > 0 and espera_novos == 0 and horarios_disponiveis > 0 and horarios_restantes > 0:
-        a = min(horarios_disponiveis, espera_antigos)
-        horarios_restantes = abs(horarios_disponiveis - a)
-        if horarios_restantes < a:
-            espera_antigos = abs(espera_antigos + abs(horarios_restantes - a))
+        b = min(horarios_disponiveis, espera_antigos)
+        horarios_restantes = abs(horarios_disponiveis - b)
+        if horarios_restantes < b:
+            espera_antigos = abs(espera_antigos + abs(horarios_restantes - b))
             horarios_disponiveis = 0
             horarios_restantes = 0
         else:
             espera_antigos = 0
-        b = min(horarios_restantes, pacientes_novos)
-        if horarios_restantes < b:
-            espera_novos = abs(espera_novos + abs(horarios_restantes - b))
+        a = min(horarios_restantes, pacientes_novos)
+        if horarios_restantes < a:
+            espera_novos = abs(espera_novos + abs(horarios_restantes - a))
             horarios_disponiveis = 0
             horarios_restantes = 0
         else:
@@ -89,8 +92,6 @@ for semana in range(1, numero_de_semanas + 1):
             horarios_restantes = 0
         else:
             espera_antigos = 0
-
-    retorno = espera_antigos + espera_novos
   
     print('Semana:', semana)
     print('Pacientes de primeiro atendimento agendados:', primeiro_atendimento)
