@@ -7,115 +7,69 @@
 
 # Esse sistema deve ser capaz de organiar agendamentos de consultas de uma clínicas
 
-# O usuário deve informar as seguintes variáveis:
 
-numero_de_semanas = int(input()) # Quantidade de Semanas que o  para gendamento
+numero_de_semanas = int(input()) # Lê o número de semanas
 
-# Definindo as variáveis
-
-espera_novos = int() #Novos pacientes na fila de espera
-espera_antigos = int() #Antigos pacientes na fila de espera
-horarios_restantes = 0 
+# Filas de espera
+fila_novos = 0
+fila_antigos = 0
 
 # Leitura das semanas
 
 for semana in range(1, numero_de_semanas + 1):
-    horarios_disponiveis = int(input())
-    pacientes_novos = int(input())
-    pacientes_antigos = int(input())
-    primeiro_atendimento = a
-    retorno = b
+    horarios_disponiveis = int(input())  # horários disponíveis
+    pacientes_novos = int(input())  # pacientes novos que procuram agendamento
+    pacientes_antigos = int(input())  # pacientes antigos que procuram agendamento
+    
+    # Horários restantes para alocar
+    horarios_restantes = horarios_disponiveis
+    
+    # Pacientes agendados
+    novos_agendados = 0
+    antigos_agendados = 0
 
     # Cálculos e impressão da saída por semana
-    
+
 # Ordem de Prioridade:
-    # 1° Pacientes em espera (espera_novos)
-    # 2° Pacientes em espera (espera_antigos)
+    # 1° Pacientes em espera (fila_novos)
+    # 2° Pacientes em espera (fila_antigos)
     # 3° Novos agendamentos (pacientes_novos)
     # 4° Novos agendamentos (pacientes_antigos)
-
-    if espera_novos > 0 and espera_antigos > 0 and horarios_disponiveis > 0 and horarios_restantes > 0:
-        a = min(horarios_disponiveis, espera_novos)
-        horarios_restantes = abs(horarios_disponiveis - a)
-        if horarios_restantes < a:
-            espera_novos = abs(espera_novos + abs(horarios_restantes - a))
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_novos = 0
-        b = min(horarios_restantes, espera_antigos)
-        if horarios_restantes < b:
-            espera_antigos = abs(espera_antigos + abs(horarios_restantes - b))
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_antigos = 0       
-
-    if espera_novos > 0 and espera_antigos == 0 and horarios_disponiveis > 0 and horarios_restantes > 0:
-        a = min(horarios_disponiveis, espera_novos)
-        horarios_restantes = abs(horarios_disponiveis - a)
-        if horarios_restantes < a:
-            espera_novos = abs(espera_novos + abs(horarios_restantes - a))
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_novos = 0
-        b = min(horarios_restantes, pacientes_novos)
-        if horarios_restantes < b:
-            espera_novos = abs(espera_novos + abs(horarios_restantes - b))
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_novos = 0
-
-    if espera_antigos > 0 and espera_novos == 0 and horarios_disponiveis > 0 and horarios_restantes > 0:
-        b = min(horarios_disponiveis, espera_antigos)
-        horarios_restantes = abs(horarios_disponiveis - b)
-        if horarios_restantes < b:
-            espera_antigos = abs(espera_antigos + abs(horarios_restantes - b))
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_antigos = 0
-        a = min(horarios_restantes, pacientes_novos)
-        if horarios_restantes < a:
-            espera_novos = abs(espera_novos + abs(horarios_restantes - a))
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_novos = 0
-
-    if espera_novos == 0 and espera_antigos == 0 and horarios_disponiveis > 0 and horarios_restantes > 0:
-        a = min(horarios_disponiveis, pacientes_novos)
-        horarios_restantes = abs(horarios_disponiveis - a)
-        if horarios_restantes < a:
-            espera_novos = abs(horarios_restantes - a)
-        else:
-            espera_novos = 0
-        b = min(horarios_restantes, pacientes_antigos)
-        if horarios_restantes < b:
-            espera_antigos = abs(horarios_restantes - b)
-            horarios_disponiveis = 0
-            horarios_restantes = 0
-        else:
-            espera_antigos = 0
-  
-    print('Semana:', semana)
-    print('Pacientes de primeiro atendimento agendados:', primeiro_atendimento)
-    print('Pacientes de retorno agendados:', retorno)
-
     
-#        pacientes_novos = abs(a + b)
-#        horarios_restantes = abs(horarios_restantes - b)
-#        retorno = min(horarios_restantes, pacientes_antigos)
-
-#        if horarios_restantes < pacientes_antigos:
-#            espera_antigos = abs(espera_antigos + abs(pacientes_antigos - retorno))
-#        else:
-#            espera_antigos = abs(espera_antigos - retorno)
+    # Prioridade 1°
+    if fila_novos > 0 and horarios_restantes > 0:
+        agendados = min(fila_novos, horarios_restantes)
+        novos_agendados += agendados
+        fila_novos -= agendados
+        horarios_restantes -= agendados
     
+    # Prioridade 2°
+    if fila_antigos > 0 and horarios_restantes > 0:
+        agendados = min(fila_antigos, horarios_restantes)
+        antigos_agendados += agendados
+        fila_antigos -= agendados
+        horarios_restantes -= agendados
     
-#    if espera_antigos > 0:
-#        a = min()
-#        b = min()
+    # Prioridade 3°
+    pacientes_novos_restantes = pacientes_novos
+    if pacientes_novos_restantes > 0 and horarios_restantes > 0:
+        agendados = min(pacientes_novos_restantes, horarios_restantes)
+        novos_agendados += agendados
+        pacientes_novos_restantes -= agendados
+        horarios_restantes -= agendados
     
+    # Prioridade 4°
+    pacientes_antigos_restantes = pacientes_antigos
+    if pacientes_antigos_restantes > 0 and horarios_restantes > 0:
+        agendados = min(pacientes_antigos_restantes, horarios_restantes)
+        antigos_agendados += agendados
+        pacientes_antigos_restantes -= agendados
+        horarios_restantes -= agendados
+    
+    # Atualiza as filas de espera com pacientes não agendados
+    fila_novos += pacientes_novos_restantes  # pacientes novos não agendados
+    fila_antigos += pacientes_antigos_restantes  # pacientes antigos não agendados
+    
+    print(f"Semana: {semana}")
+    print(f"Pacientes de primeiro atendimento agendados: {novos_agendados}")
+    print(f"Pacientes de retorno agendados: {antigos_agendados}")
