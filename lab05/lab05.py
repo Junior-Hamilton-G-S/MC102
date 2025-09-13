@@ -5,9 +5,17 @@
 # RA: 292623
 ###################################################
 
-numero_de_semanas = int(input()) #Quantidade de Semanas para gendamento
+# Esse sistema deve ser capaz de organiar agendamentos de consultas de uma clínicas
+
+# O usuário deve informar as seguintes variáveis:
+
+numero_de_semanas = int(input()) # Quantidade de Semanas que o  para gendamento
+
+# Definindo as variáveis
+
 espera_novos = int() #Novos pacientes na fila de espera
 espera_antigos = int() #Antigos pacientes na fila de espera
+horarios_restantes = 0 
 
 # Leitura das semanas
 
@@ -15,7 +23,6 @@ for semana in range(1, numero_de_semanas + 1):
     horarios_disponiveis = int(input())
     pacientes_novos = int(input())
     pacientes_antigos = int(input())
-    horarios_restantes = 0 
     primeiro_atendimento = a
     retorno = b
 
