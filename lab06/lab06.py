@@ -10,7 +10,6 @@
 # Leitura da entrada
 lista_numeros = input()
 leituras = [float(numero.strip()) for numero in lista_numeros.split(',')]
-print(leituras)
 tamanho_janela = int(input())
 limite = float(input())
 
