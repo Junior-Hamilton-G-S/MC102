@@ -6,31 +6,26 @@
 ###################################################
 
 
-# Regras do jogo: constantes para a análise
-TAMANHO_JANELA = 9
-CARTAS_PARA_FLUSH = 5
-NAIPES = ['C', 'O', 'E', 'P']
-
-
 # Leitura da entrada
 baralho = input()
+flushes_c = 0
+flushes_o = 0
+flushes_e = 0
+flushes_p = 0
 
 
-# Contagem de flushes para cada naipe
-contagem_flushes = {'C': 0, 'O': 0, 'E': 0, 'P': 0}
-
-
-# Analisa cada janela de 9 cartas
-for i in range(len(baralho) - TAMANHO_JANELA + 1):
-    mao = baralho[i : i + TAMANHO_JANELA]
-
-    # Verifica se há um flush na mão atual
-    for naipe in NAIPES:
-        if mao.count(naipe) >= CARTAS_PARA_FLUSH:
-            contagem_flushes[naipe] += 1
-            # Encontrou um flush, avança para a próxima janela
-            break
+# Processamento da entrada
+for i in range(len(baralho) - 8):
+    mao = baralho[i : i + 9]
+    if mao.count('C') >= 5:
+        flushes_c += 1
+    elif mao.count('O') >= 5:
+        flushes_o += 1
+    elif mao.count('E') >= 5:
+        flushes_e += 1
+    elif mao.count('P') >= 5:
+        flushes_p += 1
 
 
 # Impressão da saída
-print(f"{contagem_flushes['C']} {contagem_flushes['O']} {contagem_flushes['E']} {contagem_flushes['P']}")
+print(flushes_c, flushes_o, flushes_e, flushes_p)
