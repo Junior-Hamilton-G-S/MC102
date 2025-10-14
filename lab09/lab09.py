@@ -17,8 +17,7 @@ alfabeto = {
 
 # Leitura de entradas
 N = input() #Número de operações a serem processadas;
-modificador = []
-modificador = input() #0 ou 1 (0 => valor_letra = 0; 1 => valor_letra = alfabeto)
+modificador = list(map(int, input().split())) #0 ou 1 (0 => valor_letra = 0; 1 => valor_letra = alfabeto)
 print("modificador =", modificador)
 operacoes = input()
 
@@ -28,8 +27,15 @@ novo_alfabeto = {}
 def alteracao_do_alfabeto ():
     original = dict.values(alfabeto) 
     print("original =", original)
-    modifica = dict.values(modificador)
-    print("modifica =", modifica)
+    novo = list(zip(original, modificador))
+    for i in range(len(novo)):
+      soma = (novo[i])
+      soma_1 = (novo[i + 1])
+      novo_alfabeto[i] = soma + soma_1
+      
+    print("novo_alfabeto", novo_alfabeto)
+
+
 
 alteracao_do_alfabeto()
 
