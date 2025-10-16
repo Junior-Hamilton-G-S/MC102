@@ -52,8 +52,15 @@ string = operacoes.split(' ')
 print("palavra =", string)
 
 for i in range(len(string)):
-  i = (string).split("',")
-  print('i =', i)
-
+  j = i + 1
+  k = j + 1
+  for j in range(len(string)):
+    for k in range(len(string)):
+      if string[j] == '+':
+        a = string[i] + string[k]
+        print('a =', a)
+      if string[j] == '-':
+        b = string[i] - string[k]
+        print('b =', b)
 
 # Saída
