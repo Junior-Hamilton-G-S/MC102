@@ -18,7 +18,7 @@ alfabeto = {
 # Leitura de entradas
 N = input() #Número de operações a serem processadas;
 modificador = list(map(int, input().split())) #0 ou 1 (0 => valor_letra = 0; 1 => valor_letra = alfabeto)
-print("modificador =", modificador)
+#print("modificador =", modificador)
 operacoes = input()
 
 
@@ -26,29 +26,34 @@ operacoes = input()
 def alteracao_do_alfabeto ():
   novo_alfabeto = []
   original = dict.values(alfabeto) 
-  print("original =", original)
+  #print("original =", original)
   novo = list(zip(original, modificador))
-  print("novo =", novo)
+  #print("novo =", novo)
 
   for i, j in novo:
     mult = i * j
-    print("mult =", mult)
+    #print("mult =", mult)
     novo_alfabeto.append(mult)
-    print("novo_alfabeto =", novo_alfabeto)
+    #print("novo_alfabeto =", novo_alfabeto)
     
   letras = list(dict(alfabeto).keys())
-  print("letras =", letras)
+  #print("letras =", letras)
   valores = list(novo_alfabeto)
-  print("valores =", valores)
+  #print("valores =", valores)
 
-  for k, n in letras and valores:
-    novo_alfabeto = zip(list({letras : valores}))
-    print("novo_alfabeto =", novo_alfabeto)
+  novo_alfabeto = dict(zip(letras, valores))
+  #print("novo_alfabeto =", novo_alfabeto)
 
 alteracao_do_alfabeto()
 
 
-# Processamento das equações
+# Processamento das equações:
+string = operacoes.split(' ')
+print("palavra =", string)
+
+for i in range(len(string)):
+  i = (string).split("',")
+  print('i =', i)
 
 
-# Saída 
+# Saída
