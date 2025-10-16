@@ -36,10 +36,14 @@ def alteracao_do_alfabeto ():
     novo_alfabeto.append(mult)
     print("novo_alfabeto =", novo_alfabeto)
     
-  for k in dict(alfabeto).keys():
-    novo_alfabeto = zip({dict(alfabeto).keys : novo_alfabeto})
-    print("novo_alfabeto =", novo_alfabeto)
+  letras = list(dict(alfabeto).keys())
+  print("letras =", letras)
+  valores = list(novo_alfabeto)
+  print("valores =", valores)
 
+  for k, n in letras and valores:
+    novo_alfabeto = zip(list({letras : valores}))
+    print("novo_alfabeto =", novo_alfabeto)
 
 alteracao_do_alfabeto()
 
