@@ -51,16 +51,27 @@ alteracao_do_alfabeto()
 string = operacoes.split(' ')
 print("palavra =", string)
 
-for i in range(len(string)):
-  j = i + 1
-  k = j + 1
-  for j in range(len(string)):
-    for k in range(len(string)):
-      if string[j] == '+':
-        a = string[i] + string[k]
-        print('a =', a)
-      if string[j] == '-':
-        b = string[i] - string[k]
-        print('b =', b)
+for i in range(0, len(string), 3):
+  print('I PASSOU AQUI', {i}, 'VEZES')
+  print('------------------------------------------')
+
+  if i == len(string):
+
+    print({string[i]})
+    print('------------------------------------------')
+
+  elif i + 1 == len(string):
+
+    print({string[i]})
+    print({string[i + 1]})
+    print('------------------------------------------')
+
+  elif i + 2 <= len(string):
+
+    print({string[i]})
+    print({string[i + 1]})
+    print({string[i + 2]}) 
+    print('------------------------------------------')
+
 
 # Saída
