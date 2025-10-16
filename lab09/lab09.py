@@ -23,18 +23,22 @@ operacoes = input()
 
 
 # Alteração do alfabeto (modificador)
-novo_alfabeto = {}
 def alteracao_do_alfabeto ():
-    original = dict.values(alfabeto) 
-    print("original =", original)
-    novo = list(zip(original, modificador))
-    for i in range(len(novo)):
-      soma = (novo[i])
-      soma_1 = (novo[i + 1])
-      novo_alfabeto[i] = soma + soma_1
-      
-    print("novo_alfabeto", novo_alfabeto)
+  novo_alfabeto = []
+  original = dict.values(alfabeto) 
+  print("original =", original)
+  novo = list(zip(original, modificador))
+  print("novo =", novo)
 
+  for i, j in novo:
+    mult = i * j
+    print("mult =", mult)
+    novo_alfabeto.append(mult)
+    print("novo_alfabeto =", novo_alfabeto)
+    
+  for k in dict(alfabeto).keys():
+    novo_alfabeto = zip({dict(alfabeto).keys : novo_alfabeto})
+    print("novo_alfabeto =", novo_alfabeto)
 
 
 alteracao_do_alfabeto()
