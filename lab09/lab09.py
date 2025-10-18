@@ -14,64 +14,53 @@ alfabeto = {
   't': 2, 'u': 3, 'v': 4, 'w': 5, 'x': 6, 'y': 7, 'z': 8
 }
 
-
 # Leitura de entradas
 N = input() #Número de operações a serem processadas;
 modificador = list(map(int, input().split())) #0 ou 1 (0 => valor_letra = 0; 1 => valor_letra = alfabeto)
-#print("modificador =", modificador)
-operacoes = input()
-
 
 # Alteração do alfabeto (modificador)
-def alteracao_do_alfabeto ():
+def alteracao_do_alfabeto (alfabeto, modificador):
   novo_alfabeto = []
-  original = dict.values(alfabeto) 
-  #print("original =", original)
-  novo = list(zip(original, modificador))
-  #print("novo =", novo)
+  valores_originais = dict.values(alfabeto)
+  combina_valor = list(zip(valores_originais, modificador))
 
-  for i, j in novo:
+  for i, j in combina_valor:
     mult = i * j
-    #print("mult =", mult)
     novo_alfabeto.append(mult)
-    #print("novo_alfabeto =", novo_alfabeto)
     
   letras = list(dict(alfabeto).keys())
-  #print("letras =", letras)
-  valores = list(novo_alfabeto)
-  #print("valores =", valores)
+  novos_valores = list(novo_alfabeto)
 
-  novo_alfabeto = dict(zip(letras, valores))
-  #print("novo_alfabeto =", novo_alfabeto)
+  novo_alfabeto = dict(zip(letras, novos_valores))
+  return novo_alfabeto
 
-alteracao_do_alfabeto()
-
+novo_alfabeto = alteracao_do_alfabeto(alfabeto, modificador)
 
 # Processamento das equações:
-string = operacoes.split(' ')
-print("palavra =", string)
+def valor_palavra (palavra):
+  valor_palavra = ""
+  palavra = palavra.lower()
+  
+  for letra in palavra:
+    valor_letra = novo_alfabeto[letra]
+    valor_palavra += str(valor_letra)
 
-for i in range(0, len(string), 3):
-  print('I PASSOU AQUI', {i}, 'VEZES')
-  print('------------------------------------------')
+  return int(valor_palavra)
 
-  if i == len(string):
-
-    print({string[i]})
-    print('------------------------------------------')
-
-  elif i + 1 == len(string):
-
-    print({string[i]})
-    print({string[i + 1]})
-    print('------------------------------------------')
-
-  elif i + 2 <= len(string):
-
-    print({string[i]})
-    print({string[i + 1]})
-    print({string[i + 2]}) 
-    print('------------------------------------------')
-
+def operacao (valor, simbolo, a):
+  if simbolo == '+':
+    return valor + valor_palavra(a)
+  elif simbolo == '-':
+    return valor - valor_palavra(a)
 
 # Saída
+for string in range(1, int(N) + 1):
+  operacoes = input()
+  string = operacoes.split(' ')
+  valor = valor_palavra(string[0])
+
+  for i in range(1, len(string), 2):
+    if i + 1 <= len(string):
+      valor = operacao(valor, string[i], string[i + 1])
+
+  print(valor)
