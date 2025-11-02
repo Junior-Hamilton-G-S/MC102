@@ -9,106 +9,100 @@
 quantidade_andares, quantidade_janelas = input().split(' ')
 
 def DesenhaPredio(quantidade_andares, quantidade_janelas):
-    face_do_predio = []
-    janelas_no_andar = ["#"] * int(quantidade_janelas)
-    for andar in range(int(quantidade_andares)):
-        face_do_predio.append(janelas_no_andar.copy())
-    
-    face_norte = face_do_predio.copy()
-    face_oeste = face_do_predio.copy()
-    face_sul = face_do_predio.copy() 
-    face_leste = face_do_predio.copy()
-    face_norte[int(quantidade_andares) - 1][0] = "R"
+    def criar_face():
+        face = []
+        for andar in range(int(quantidade_andares)):
+            janelas_no_andar = ["#"] * int(quantidade_janelas)
+            face.append(janelas_no_andar)
+        return face
+
+    face_norte = criar_face()
+    face_oeste = criar_face()
+    face_sul = criar_face()
+    face_leste = criar_face()
+    face_norte[0][0] = "R"
 
     return [face_norte, face_oeste, face_sul, face_leste]
 
 predio_inteiro = DesenhaPredio(quantidade_andares, quantidade_janelas)
-
-matriz_atual = predio_inteiro[0]
+face_atual = 0
 
 # Leitura e processamento dos comandos
-def PosicaoJoomba(matriz_joomba):
-    posicao_joomba = []
-    for linha, andar in enumerate(matriz_joomba):
-        for coluna, letra in enumerate(andar):
-            if "R" == letra:
-                posicao_joomba.append(linha)
-                posicao_joomba.append(coluna)
-                return (matriz_joomba, posicao_joomba)
+def PosicaoJoomba(face_index):
+    matriz = predio_inteiro[face_index]
+    for linha in range(len(matriz)):
+        for coluna in range(len(matriz[linha])):
+            if matriz[linha][coluna] == "R":
+                return [linha, coluna]
+    return None
 
-def MudaFace(matriz_joomba, posicao_joomba, direcao):
+def MudaFace(face_atual, posicao_joomba, direcao):
+    matriz_atual = predio_inteiro[face_atual]
+    matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "."
+
     if direcao == "D":
-        matriz_joomba = predio_inteiro[matriz_joomba.index(matriz_joomba) + 1 % 4]
+        face_atual = (face_atual + 1) % 4
         posicao_joomba[1] = 0
-        matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "R"
-        return PosicaoJoomba(matriz_joomba)
-
     elif direcao == "E":
-        matriz_joomba = predio_inteiro[matriz_joomba.index(matriz_joomba) - 1 % 4]
+        face_atual = (face_atual - 1) % 4
         posicao_joomba[1] = int(quantidade_janelas) - 1
-        matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "R"
-        return PosicaoJoomba(matriz_joomba) 
+
+    matriz_nova = predio_inteiro[face_atual]
+    matriz_nova[posicao_joomba[0]][posicao_joomba[1]] = "R"
+
+    return face_atual
 
 while True:
     direcao, janelas_percorridas = input().split(' ')
-    matriz_joomba, posicao_joomba = PosicaoJoomba(matriz_atual)
-
-    if direcao == "D":
-        for janela in range(int(janelas_percorridas)):
-            if not posicao_joomba[1] == int(quantidade_janelas) - 1:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                posicao_joomba[1] += 1
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "R"
-
-
-            elif posicao_joomba[1] == int(quantidade_janelas) - 1:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                matriz_atual = MudaFace(matriz_joomba, posicao_joomba, direcao)
-                continue
-
-    if direcao == "E":
-        for janela in range(int(janelas_percorridas)):
-            if not posicao_joomba[1] == int(quantidade_janelas) - 1:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                posicao_joomba[1] -= 1
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "R"
-
-            elif posicao_joomba[1] == int(quantidade_janelas) - 1:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                matriz_atual = MudaFace(matriz_joomba, posicao_joomba, direcao)
-                continue
-
-    if direcao == "C":
-        for janela in range(int(janelas_percorridas)):
-            if not posicao_joomba[0] == 0:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                posicao_joomba[0] -= 1
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "R"
-
-            if posicao_joomba[0] == 0:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                continue
-
-    if direcao == "B":
-        for janela in range(int(janelas_percorridas)):
-            if not posicao_joomba[0] == int(quantidade_andares) - 1:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                posicao_joomba[0] += 1
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "R"
-
-            elif posicao_joomba[0] == int(quantidade_andares) - 1:
-                matriz_joomba[posicao_joomba[0]][posicao_joomba[1]] = "."
-                continue
+    posicao_joomba = PosicaoJoomba(face_atual)
 
     if direcao == "F" and janelas_percorridas == "0":
         break
 
+    matriz_atual = predio_inteiro[face_atual]
+
+    if direcao == "D":
+        for janela in range(int(janelas_percorridas)):
+            if posicao_joomba[1] < int(quantidade_janelas) - 1:
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "."
+                posicao_joomba[1] = posicao_joomba[1] + 1
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "R"
+            else:
+                face_atual = MudaFace(face_atual, posicao_joomba, direcao)
+                matriz_atual = predio_inteiro[face_atual]
+
+    elif direcao == "E":
+        for janela in range(int(janelas_percorridas)):
+            if posicao_joomba[1] > 0:
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "."
+                posicao_joomba[1] = posicao_joomba[1] - 1
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "R"
+            else:
+                face_atual = MudaFace(face_atual, posicao_joomba, direcao)
+                matriz_atual = predio_inteiro[face_atual]
+
+    elif direcao == "C":
+        for janela in range(int(janelas_percorridas)):
+            if posicao_joomba[0] < int(quantidade_andares) - 1:
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "."
+                posicao_joomba[0] = posicao_joomba[0] + 1
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "R"
+
+    elif direcao == "B":
+        for janela in range(int(janelas_percorridas)):
+            if posicao_joomba[0] > 0:
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "."
+                posicao_joomba[0] = posicao_joomba[0] - 1
+                matriz_atual[posicao_joomba[0]][posicao_joomba[1]] = "R"
+
+face_norte, face_oeste, face_sul, face_leste = predio_inteiro
+
 # Impressão do resultado final
 def ImprimePredio(nome_da_face, face_do_predio):
     print(nome_da_face)
-    for andar in face_do_predio:
-        print("".join(andar))
-        
+    ultimo_andar = int(quantidade_andares) - 1
+    for i in range(ultimo_andar, -1, -1):
+        print("".join(face_do_predio[i]))
     print("-" * int(quantidade_janelas))
 
 ImprimePredio("Face N", face_norte)
