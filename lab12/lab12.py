@@ -13,27 +13,33 @@ for linha in range(horta_linhas):
 
 
 # Leitura e posicionamento de cada planta
-
-def ProcuraPonto(matriz):
-    for linha in range(len(matriz)):
-        for coluna in range(len(matriz[linha])):
-            if matriz[linha][coluna] == ".":
-                return [linha, coluna]
-
-def VerificaSeAPlantaCabe(matriz_horta, linha, coluna, matriz_planta):
-    for linha_planta in range(plantas_linhas): 
-        for coluna_planta in range(matriz_planta[linha_planta]):
-            matriz_horta[linha][coluna] 
-
 def PosicionaPlanta(tipo_planta, matriz_planta):
-    if tipo_planta == "P": # "P" é a planta de solo: Sempre tentar posicionar na linha mais baixa possível e, dentro dessa linha, na posição mais à esquerda possível
-        
+    quantidade_linhas_planta = len(matriz_planta)
+    quantidade_colunas_planta = len(matriz_planta[0])
+    quantidade_linhas_horta = len(matriz_horta)
+    quantidade_colunas_horta = len(matriz_horta[0])
+    matriz_provisoria = []
+    for linha_horta in range(matriz_horta):
+        matriz_provisoria.append(linha_horta.copy())
+
+    if tipo_planta == "P": # "P" é a planta de solo: linha mais baixa e posição mais à esquerda
+        for linha_horta in range(horta_linhas, 0, -1):
+            for coluna_horta in range(len(matriz_horta[linha_horta]), 0, -1):
+                if matriz_horta[linha_horta][coluna_horta] == ".":
+                    linhas_provisorias = quantidade_linhas_horta - quantidade_linhas_planta
+                    colunas_provisorias = quantidade_colunas_horta - quantidade_colunas_planta
+                    for linhas_apagadas in range(linhas_provisorias):
+                        for colunas_apagadas in range(colunas_provisorias, 0, -1):
+                            del matriz_provisoria[linhas_apagadas]
+                            del matriz_provisoria[linhas_apagadas][colunas_apagadas]
+                    print("\n", matriz_provisoria)  
+                print("\n", matriz_provisoria)
+            print("\n", matriz_provisoria)
+        print("\n", matriz_provisoria)   
         return
 
-    if tipo_planta == "L": # "L" é a planta de altitude: Sempre tentar posicionar na linha mais alta possível e, dentro dessa linha, na posição mais à esquerda possível
-        linha_horta, coluna_horta = ProcuraPonto(matriz_horta)
-                    
-                    
+    if tipo_planta == "L": # "L" é a planta de altitude: linha mais alta e posição mais à esquerda
+
 
         return
 
@@ -44,9 +50,10 @@ planta_linhas = int(input()) #número de 'linhas' da planta, i.e. tamanho vertic
 matriz_planta = [] # matriz que representa o tamanho (as entradas) que a planta ocupa na horta
 for linha in range(planta_linhas):
     matriz_planta.append(input()) # recebe as entradas ("." ou "#") do matriz_planta : "." indica uma posição livre e "# indica uma posição ocupada
-tipo_planta = str() # recebe o tipo da planta ("P" = planta de solo ou "L" = planta de altitude) 
+tipo_planta = str(input()) # recebe o tipo da planta ("P" = planta de solo ou "L" = planta de altitude) 
 
 # processamento
+PosicionaPlanta(tipo_planta, matriz_planta)
 
 
 # Impressão da horta
